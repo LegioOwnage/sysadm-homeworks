@@ -5,6 +5,54 @@
     * поместите его в автозагрузку,
     * предусмотрите возможность добавления опций к запускаемому процессу через внешний файл (посмотрите, например, на `systemctl cat cron`),
     * удостоверьтесь, что с помощью systemctl процесс корректно стартует, завершается, а после перезагрузки автоматически поднимается.
+    
+Ответ:sudo nano /etc/systemd/system/node-exporter.service
+Внес следующие данные:                                 
+[Unit]
+Description=node-exporter_logs
+
+[Service]
+Type=simple
+ExecStart=/home/vagrant/node_exporter-1.2.2.linux-amd64/node_exporter
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+
+Добавил сервис в автозагрузку:
+systemctl enable node-exporter
+==== AUTHENTICATING FOR org.freedesktop.systemd1.manage-unit-files ===
+Authentication is required to manage system service or unit files.
+Authenticating as: vagrant,,, (vagrant)
+Password:
+==== AUTHENTICATION COMPLETE ===
+Created symlink /etc/systemd/system/multi-user.target.wants/node-exporter.service → /etc/systemd/system/node-exporter.service.
+==== AUTHENTICATING FOR org.freedesktop.systemd1.reload-daemon ===
+Authentication is required to reload the systemd state.
+Authenticating as: vagrant,,, (vagrant)
+Password:
+==== AUTHENTICATION COMPLETE ===
+
+vagrant@vagrant:~/node_exporter-1.2.2.linux-amd64$ systemctl status node-exporter
+● node-exporter.service - node-exporter_logs
+     Loaded: loaded (/etc/systemd/system/node-exporter.service; enabled; vendor preset: enabled)
+     Active: active (running) since Wed 2021-09-22 19:52:00 UTC; 2min 18s ago
+   Main PID: 1915 (node_exporter)
+      Tasks: 4 (limit: 1071)
+     Memory: 2.2M
+     CGroup: /system.slice/node-exporter.service
+             └─1915 /home/vagrant/node_exporter-1.2.2.linux-amd64/node_exporter
+
+Sep 22 19:52:00 vagrant node_exporter[1915]: level=info ts=2021-09-22T19:52:00.440Z caller=node_exporter.go:115 collector=thermal_zone
+Sep 22 19:52:00 vagrant node_exporter[1915]: level=info ts=2021-09-22T19:52:00.440Z caller=node_exporter.go:115 collector=time
+Sep 22 19:52:00 vagrant node_exporter[1915]: level=info ts=2021-09-22T19:52:00.440Z caller=node_exporter.go:115 collector=timex
+Sep 22 19:52:00 vagrant node_exporter[1915]: level=info ts=2021-09-22T19:52:00.440Z caller=node_exporter.go:115 collector=udp_queues
+Sep 22 19:52:00 vagrant node_exporter[1915]: level=info ts=2021-09-22T19:52:00.440Z caller=node_exporter.go:115 collector=uname
+Sep 22 19:52:00 vagrant node_exporter[1915]: level=info ts=2021-09-22T19:52:00.440Z caller=node_exporter.go:115 collector=vmstat
+Sep 22 19:52:00 vagrant node_exporter[1915]: level=info ts=2021-09-22T19:52:00.440Z caller=node_exporter.go:115 collector=xfs
+Sep 22 19:52:00 vagrant node_exporter[1915]: level=info ts=2021-09-22T19:52:00.440Z caller=node_exporter.go:115 collector=zfs
+Sep 22 19:52:00 vagrant node_exporter[1915]: level=info ts=2021-09-22T19:52:00.440Z caller=node_exporter.go:199 msg="Listening on" address=:9100
+Sep 22 19:52:00 vagrant node_exporter[1915]: level=info ts=2021-09-22T19:52:00.442Z caller=tls_config.go:191 msg="TLS is disabled." http2=false
 
 1. Ознакомьтесь с опциями node_exporter и выводом `/metrics` по-умолчанию. Приведите несколько опций, которые вы бы выбрали для базового мониторинга хоста по CPU, памяти, диску и сети.
 1. Установите в свою виртуальную машину [Netdata](https://github.com/netdata/netdata). Воспользуйтесь [готовыми пакетами](https://packagecloud.io/netdata/netdata/install) для установки (`sudo apt install -y netdata`). После успешной установки:
