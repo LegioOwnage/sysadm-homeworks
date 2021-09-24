@@ -80,10 +80,30 @@ BOOT_IMAGE=/boot/vmlinuz-5.4.0-80-generic root=/dev/mapper/vgvagrant-root ro net
 [    5.081217] systemd[1]: Mounted POSIX Message Queue File System.
 
 5. Как настроен sysctl `fs.nr_open` на системе по-умолчанию? Узнайте, что означает этот параметр. Какой другой существующий лимит не позволит достичь такого числа (`ulimit --help`)?
+fs.nr_open = 1048576 
+Это означает максимальное количество дескрипторов файлов, которое может выделить процесс.
+ulimit -Hn
+
 6. Запустите любой долгоживущий процесс (не `ls`, который отработает мгновенно, а, например, `sleep 1h`) в отдельном неймспейсе процессов; покажите, что ваш процесс работает под PID 1 через `nsenter`. Для простоты работайте в данном задании под root (`sudo -i`). Под обычным пользователем требуются дополнительные опции (`--map-root-user`) и т.д.
+Ответ: не понял, как выводить процесс в новый неймспейс
+
 7. Найдите информацию о том, что такое `:(){ :|:& };:`. Запустите эту команду в своей виртуальной машине Vagrant с Ubuntu 20.04 (**это важно, поведение в других ОС не проверялось**). Некоторое время все будет "плохо", после чего (минуты) – ОС должна стабилизироваться. Вызов `dmesg` расскажет, какой механизм помог автоматической стабилизации. Как настроен этот механизм по-умолчанию, и как изменить число процессов, которое можно создать в сессии?
 
- 
+Ответ: Это функция, которая параллельно пускает два своих экземпляра. Каждый пускает ещё по два и т.д. При отсутствии лимита на число процессов машина быстро исчерпывает физическую память.
+
+Процесс не прерывается. Или это и есть "стабильность"? Ну полагаю, если изменить лимит процессов, то это изменит ситуацию, с помощью ulimit -u 
+
+-bash: fork: Resource temporarily unavailable
+-bash: fork: Resource temporarily unavailable
+-bash: fork: retry: Resource temporarily unavailable
+-bash: fork: Resource temporarily unavailable
+-bash: fork: Resource temporarily unavailable
+-bash: fork: Resource temporarily unavailable
+-bash: fork: Resource temporarily unavailable
+-bash: fork: Resource temporarily unavailable
+-bash: fork: retry: Resource temporarily unavailable
+-bash: fork: Resource temporarily unavailable
+
  ---
 
 ## Как сдавать задания
