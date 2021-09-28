@@ -37,9 +37,19 @@ sudo -i
 sfdisk -d /dev/sdb | sfdisk /dev/sdc
 
 6. Соберите `mdadm` RAID1 на паре разделов 2 Гб.
+Ответ: mdadm --create --verbose /dev/md1 --level=1 --raid-devices=2 /dev/sdb1 /dev/sdc1
 
 7. Соберите `mdadm` RAID0 на второй паре маленьких разделов.
+Ответ: mdadm --create --verbose /dev/md0 --level=0 --raid-devices=2 /dev/sdb2 /dev/sdc2
+cat /proc/mdstat
+Personalities : [linear] [multipath] [raid0] [raid1] [raid6] [raid5] [raid4] [raid10]
+md0 : active raid0 sdc2[1] sdb2[0]
+      1042432 blocks super 1.2 512k chunks
 
+md1 : active raid1 sdc1[1] sdb1[0]
+      2094080 blocks super 1.2 [2/2] [UU]
+
+unused devices: <none>
 8. Создайте 2 независимых PV на получившихся md-устройствах.
 
 1. Создайте общую volume-group на этих двух PV.
