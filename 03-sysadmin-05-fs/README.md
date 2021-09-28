@@ -141,11 +141,11 @@ md1 : active raid1 sdc1[1](F) sdb1[0]
 
 unused devices: <none>
 
-1. Подтвердите выводом `dmesg`, что RAID1 работает в деградированном состоянии.
+9. Подтвердите выводом `dmesg`, что RAID1 работает в деградированном состоянии.
     Ответ: [20262.310558] md/raid1:md1: Disk failure on sdc1, disabling device.
                md/raid1:md1: Operation continuing on 1 devices.
 
-1. Протестируйте целостность файла, несмотря на "сбойный" диск он должен продолжать быть доступен:
+10. Протестируйте целостность файла, несмотря на "сбойный" диск он должен продолжать быть доступен:
 
     ```bash
     root@vagrant:~# gzip -t /tmp/new/test.gz
@@ -156,7 +156,7 @@ unused devices: <none>
 root@vagrant:~# echo $?
 0
 
-1. Погасите тестовый хост, `vagrant destroy`.
+11. Погасите тестовый хост, `vagrant destroy`.
 
  
  ---
