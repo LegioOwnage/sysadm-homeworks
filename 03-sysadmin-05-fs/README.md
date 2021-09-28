@@ -82,6 +82,8 @@ root@vagrant:~# pvscan
     ```
 
 1. Используя pvmove, переместите содержимое PV с RAID0 на RAID1.
+    Ответ: vgcreate volume-group /dev/md1 /dev/md0
+  Volume group "volume-group" successfully created
 
 1. Сделайте `--fail` на устройство в вашем RAID1 md.
 
