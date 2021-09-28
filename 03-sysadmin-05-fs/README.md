@@ -61,16 +61,16 @@ root@vagrant:~# pvscan
   PV /dev/md1                       lvm2 [<2.00 GiB]
   Total: 3 [<66.49 GiB] / in use: 1 [<63.50 GiB] / in no VG: 2 [2.99 GiB]
 
-1. Создайте общую volume-group на этих двух PV.
+9. Создайте общую volume-group на этих двух PV.
     Ответ: vgcreate volume-group /dev/md1 /dev/md0
   Volume group "volume-group" successfully created
 
-1. Создайте LV размером 100 Мб, указав его расположение на PV с RAID0.
+10. Создайте LV размером 100 Мб, указав его расположение на PV с RAID0.
     Ответ: lvcreate -L 100M volume-group /dev/md0
   Logical volume "lvol0" created.
     
 
-1. Создайте `mkfs.ext4` ФС на получившемся LV.
+11. Создайте `mkfs.ext4` ФС на получившемся LV.
     Ответ: mkfs.ext4 /dev/volume-group/lvol0
 mke2fs 1.45.5 (07-Jan-2020)
 Creating filesystem with 25600 4k blocks and 25600 inodes
@@ -80,15 +80,15 @@ Writing inode tables: done
 Creating journal (1024 blocks): done
 Writing superblocks and filesystem accounting information: done
 
-1. Смонтируйте этот раздел в любую директорию, например, `/tmp/new`.
+12. Смонтируйте этот раздел в любую директорию, например, `/tmp/new`.
     Ответ: mkdir /tmp/new #создаем директорию
     mount /dev/volume-group/lvol0 /tmp/new #монтируем раздел в директорию
 
-1. Поместите туда тестовый файл, например `wget https://mirror.yandex.ru/ubuntu/ls-lR.gz -O /tmp/new/test.gz`.
+13. Поместите туда тестовый файл, например `wget https://mirror.yandex.ru/ubuntu/ls-lR.gz -O /tmp/new/test.gz`.
     Ответ: root@vagrant:/tmp/new# ls
 lost+found  test.gz
 
-1. Прикрепите вывод `lsblk`.
+14. Прикрепите вывод `lsblk`.
     Ответ: lsblk
 NAME                      MAJ:MIN RM  SIZE RO TYPE  MOUNTPOINT
 sda                         8:0    0   64G  0 disk
@@ -111,7 +111,7 @@ sdc                         8:32   0  2.5G  0 disk
     └─volume--group-lvol0 253:2    0  100M  0 lvm   /tmp/new
     
 
-1. Протестируйте целостность файла:
+15. Протестируйте целостность файла:
 
     ```bash
     root@vagrant:~# gzip -t /tmp/new/test.gz
@@ -122,13 +122,13 @@ sdc                         8:32   0  2.5G  0 disk
 root@vagrant:/tmp/new# echo $?
 0
 
-1. Используя pvmove, переместите содержимое PV с RAID0 на RAID1.
+16. Используя pvmove, переместите содержимое PV с RAID0 на RAID1.
     Ответ: pvmove /dev/md0 /dev/md1
   /dev/md0: Moved: 56.00%
   /dev/md0: Moved: 100.00%
     
 
-1. Сделайте `--fail` на устройство в вашем RAID1 md.
+17. Сделайте `--fail` на устройство в вашем RAID1 md.
     Ответ:  mdadm --fail /dev/md1  /dev/sdc1
 mdadm: set /dev/sdc1 faulty in /dev/md1
 root@vagrant:~# cat /proc/mdstat
@@ -141,11 +141,11 @@ md1 : active raid1 sdc1[1](F) sdb1[0]
 
 unused devices: <none>
 
-9. Подтвердите выводом `dmesg`, что RAID1 работает в деградированном состоянии.
+18. Подтвердите выводом `dmesg`, что RAID1 работает в деградированном состоянии.
     Ответ: [20262.310558] md/raid1:md1: Disk failure on sdc1, disabling device.
                md/raid1:md1: Operation continuing on 1 devices.
 
-10. Протестируйте целостность файла, несмотря на "сбойный" диск он должен продолжать быть доступен:
+19. Протестируйте целостность файла, несмотря на "сбойный" диск он должен продолжать быть доступен:
 
     ```bash
     root@vagrant:~# gzip -t /tmp/new/test.gz
@@ -156,7 +156,7 @@ unused devices: <none>
 root@vagrant:~# echo $?
 0
 
-11. Погасите тестовый хост, `vagrant destroy`.
+20. Погасите тестовый хост, `vagrant destroy`.
 
  
  ---
