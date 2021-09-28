@@ -50,6 +50,7 @@ md1 : active raid1 sdc1[1] sdb1[0]
       2094080 blocks super 1.2 [2/2] [UU]
 
 unused devices: <none>
+    
 8. Создайте 2 независимых PV на получившихся md-устройствах.
 
 1. Создайте общую volume-group на этих двух PV.
