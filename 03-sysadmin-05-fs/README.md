@@ -52,6 +52,14 @@ md1 : active raid1 sdc1[1] sdb1[0]
 unused devices: <none>
     
 8. Создайте 2 независимых PV на получившихся md-устройствах.
+    Ответ:pvcreate /dev/md1 /dev/md0
+  Physical volume "/dev/md1" successfully created.
+  Physical volume "/dev/md0" successfully created.
+root@vagrant:~# pvscan
+  PV /dev/sda5   VG vgvagrant       lvm2 [<63.50 GiB / 0    free]
+  PV /dev/md0                       lvm2 [1018.00 MiB]
+  PV /dev/md1                       lvm2 [<2.00 GiB]
+  Total: 3 [<66.49 GiB] / in use: 1 [<63.50 GiB] / in no VG: 2 [2.99 GiB]
 
 1. Создайте общую volume-group на этих двух PV.
 
