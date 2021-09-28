@@ -52,7 +52,7 @@ md1 : active raid1 sdc1[1] sdb1[0]
 unused devices: <none>
     
 8. Создайте 2 независимых PV на получившихся md-устройствах.
-    Ответ:pvcreate /dev/md1 /dev/md0
+    Ответ: pvcreate /dev/md1 /dev/md0
   Physical volume "/dev/md1" successfully created.
   Physical volume "/dev/md0" successfully created.
 root@vagrant:~# pvscan
