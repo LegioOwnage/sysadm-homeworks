@@ -118,13 +118,32 @@ sdc                         8:32   0  2.5G  0 disk
     root@vagrant:~# echo $?
     0
     ```
+    Ответ: gzip -t /tmp/new/test.gz
+root@vagrant:/tmp/new# echo $?
+0
 
 1. Используя pvmove, переместите содержимое PV с RAID0 на RAID1.
+    Ответ: pvmove /dev/md0 /dev/md1
+  /dev/md0: Moved: 56.00%
+  /dev/md0: Moved: 100.00%
     
 
 1. Сделайте `--fail` на устройство в вашем RAID1 md.
+    Ответ:  mdadm --fail /dev/md1  /dev/sdc1
+mdadm: set /dev/sdc1 faulty in /dev/md1
+root@vagrant:~# cat /proc/mdstat
+Personalities : [linear] [multipath] [raid0] [raid1] [raid6] [raid5] [raid4] [raid10]
+md0 : active raid0 sdc2[1] sdb2[0]
+      1042432 blocks super 1.2 512k chunks
+
+md1 : active raid1 sdc1[1](F) sdb1[0]
+      2094080 blocks super 1.2 [2/1] [U_]
+
+unused devices: <none>
 
 1. Подтвердите выводом `dmesg`, что RAID1 работает в деградированном состоянии.
+    Ответ: [20262.310558] md/raid1:md1: Disk failure on sdc1, disabling device.
+               md/raid1:md1: Operation continuing on 1 devices.
 
 1. Протестируйте целостность файла, несмотря на "сбойный" диск он должен продолжать быть доступен:
 
@@ -133,6 +152,9 @@ sdc                         8:32   0  2.5G  0 disk
     root@vagrant:~# echo $?
     0
     ```
+    Ответ: gzip -t /tmp/new/test.gz
+root@vagrant:~# echo $?
+0
 
 1. Погасите тестовый хост, `vagrant destroy`.
 
