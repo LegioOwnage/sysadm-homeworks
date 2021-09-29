@@ -13,6 +13,7 @@ Description=node_exporter_logs
 
 [Service]
 ExecStart=/home/vagrant/node_exporter-1.2.2.linux-amd64/node_exporter
+EnvironmentFile=-/etc/default/node_exporter
 Restart=Always
 
 [Install]
