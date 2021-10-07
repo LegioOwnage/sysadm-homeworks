@@ -41,6 +41,11 @@ traceroute to google.com (64.233.165.100), 30 hops max, 60 byte packets
  1  _gateway (10.0.2.2)  0.674 ms  0.561 ms  0.477 ms
 Вот что имею, дальше нет коннекта.
 По этой же причине не могу ответить на последующие вопросы.
+![image](https://user-images.githubusercontent.com/89036206/136446564-f9f67cc6-281c-434b-9597-46649d77268e.png)
+![image](https://user-images.githubusercontent.com/89036206/136450609-be22a88e-bfbe-4424-9fb9-a0f164b3beb5.png)
+![image](https://user-images.githubusercontent.com/89036206/136450851-3e2b9404-9ed7-4ea5-b5e4-c0cdeeed8685.png)
+
+
 6. Повторите задание 5 в утилите `mtr`. На каком участке наибольшая задержка - delay?
   Ответ: 
 7. Какие DNS сервера отвечают за доменное имя dns.google? Какие A записи? воспользуйтесь утилитой `dig`
