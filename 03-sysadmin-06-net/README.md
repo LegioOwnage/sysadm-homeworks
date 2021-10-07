@@ -11,6 +11,13 @@ HOST: stackoverflow.com
 [press enter]
 ```
 - В ответе укажите полученный HTTP код, что он означает?
+  Ответ:
+  HTTP/1.1 301 Moved Permanently
+cache-control: no-cache, no-store, must-revalidate
+location: https://stackoverflow.com/questions
+x-request-guid: 5120e9fa-8ebb-4ea3-86e1-a9e1e3936c63
+
+Код 301 означает, что запрос был перенаправлен (в данном случае сюда: https://stackoverflow.com/questions)
 2. Повторите задание 1 в браузере, используя консоль разработчика F12.
 - откройте вкладку `Network`
 - отправьте запрос http://stackoverflow.com
@@ -18,6 +25,10 @@ HOST: stackoverflow.com
 - укажите в ответе полученный HTTP код.
 - проверьте время загрузки страницы, какой запрос обрабатывался дольше всего?
 - приложите скриншот консоли браузера в ответ.
+  Ответ: первый код - 200
+  Дольше всего обрабатывался успешный запрос к странице сайта http://stackoverflow.com
+  ![image](https://user-images.githubusercontent.com/89036206/136438640-c39dd184-ba14-4959-9ac2-4c9870a0752f.png)
+
 3. Какой IP адрес у вас в интернете?
   Ответ: не хотел бы озвучивать, но посмотреть его можно, например здесь https://whoer.net/ru
 4. Какому провайдеру принадлежит ваш IP адрес? Какой автономной системе AS? Воспользуйтесь утилитой `whois`
