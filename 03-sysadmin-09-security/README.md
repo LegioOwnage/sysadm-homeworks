@@ -22,7 +22,7 @@
   ![image](https://user-images.githubusercontent.com/89036206/137319227-2ec07136-e0f8-4d31-8b69-f6d033343dfa.png)
   
 6. Переименуйте файлы ключей из задания 5. Настройте файл конфигурации SSH клиента, так чтобы вход на удаленный сервер осуществлялся по имени сервера.
- Ответ: т.е. нужно переименовать ключи в authorized_keys? А что делать, если у меня только vagrant?
+ Ответ: ![image](https://user-images.githubusercontent.com/89036206/138704774-af66e5f7-e9b4-4e3c-aad8-6187aa2239a6.png)
  
 7. Соберите дамп трафика утилитой tcpdump в формате pcap, 100 пакетов. Откройте файл pcap в Wireshark.
  Ответ: собрал дамп командой  sudo tcpdump -w test.pcap -c 100 -i eth0
